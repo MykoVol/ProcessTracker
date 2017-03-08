@@ -1,20 +1,22 @@
+package com.mykovol.ProcessTracker;
+
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 /**
  * Created by MykoVol on 2/24/2017.
  */
-public class WorkWithDB {
-    private static Logger log = Logger.getLogger(WorkWithDB.class.getName());
+final class WorkWithDB {
+    private static Logger logger = Logger.getLogger(WorkWithDB.class);
     private BoneCP connectionPool;
     private int machineID;
     private static WorkWithDB ourInstance = new WorkWithDB();
 
-    public static WorkWithDB getInstance() {
+    static WorkWithDB getInstance() {
         return ourInstance;
     }
 
@@ -37,14 +39,14 @@ public class WorkWithDB {
             config.setPartitionCount(1);
             conPool = new BoneCP(config); // setup the connection pool
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "getConnection failed", e);
+            logger.error("getConnectionPool failed", e);
         }
 
         return conPool;
 
     }
 
-    public int getMachineID(Connection connection) throws SQLException {
+    private int getMachineID(Connection connection) throws SQLException {
         if (this.machineID != 0) return this.machineID;
 
         String query = "{ ? = call f_get_machine_id(?)}"; //return machine id adding machine if such does not exist
@@ -57,7 +59,7 @@ public class WorkWithDB {
         return this.machineID;
     }
 
-    public boolean addTrack(ProcessDetails procDet) {
+    boolean addTrack(ProcessDetails procDet) {
         Connection connection = null;
         boolean goodTransaction = false;
         try {
@@ -77,13 +79,13 @@ public class WorkWithDB {
 
         } catch (SQLException e) {
             this.machineID = 0;
-            log.log(Level.SEVERE, e.getMessage(), e);
+            logger.error("error with p_add_track, set machineID = 0", e);
         } finally {
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    log.log(Level.SEVERE, e.getMessage(), e);
+                    logger.error("error on connection final close", e);
                 }
             }
         }

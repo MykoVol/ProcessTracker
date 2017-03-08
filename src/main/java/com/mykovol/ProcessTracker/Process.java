@@ -1,21 +1,22 @@
+package com.mykovol.ProcessTracker;
+
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.ptr.PointerByReference;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  * Created by MykoVol on 2/22/2017.
  */
-public class Process {
+class Process {
     private static final int MAX_TITLE_LENGTH = 1024;
-    private static Logger log = Logger.getLogger(Buffer.class.getName());
+    private static Logger logger = Logger.getLogger(Process.class);
 
     @Nullable
-    public static ProcessDetails getProcess() {
+    static ProcessDetails getProcess() {
         String procTitle;
         String procName;
         char[] buffer = new char[MAX_TITLE_LENGTH * 2];
@@ -25,17 +26,17 @@ public class Process {
         Pointer process = Kernel32.OpenProcess(Kernel32.PROCESS_QUERY_INFORMATION | Kernel32.PROCESS_VM_READ, false, pointer.getValue());
         Psapi.GetModuleBaseNameW(process, null, buffer, MAX_TITLE_LENGTH);
         procName = Native.toString(buffer);
-        if (procName == null) {
-            log.log(Level.WARNING, "procName is empty");
+        if (procName.isEmpty()) {
+            logger.warn("procName is empty");
             return null;
         } else {
-            log.log(Level.FINER, "procName " + procName);
+            logger.debug("procName " + procName);
         }
 
         User32DLL.GetWindowTextW(User32DLL.GetForegroundWindow(), buffer, MAX_TITLE_LENGTH);
         procTitle = Native.toString(buffer);
 //        procName = procName.substring(procName.lastIndexOf('-')+2);
-        log.log(Level.FINER, "procTitle " + procTitle);
+        logger.debug("procTitle " + procTitle);
 
         return new ProcessDetails(procName, procTitle);
     }
@@ -53,8 +54,8 @@ public class Process {
             Native.register("kernel32");
         }
 
-        public static int PROCESS_QUERY_INFORMATION = 0x0400;
-        public static int PROCESS_VM_READ = 0x0010;
+        private static int PROCESS_QUERY_INFORMATION = 0x0400;
+        private static int PROCESS_VM_READ = 0x0010;
 
         public static native int GetLastError();
 
