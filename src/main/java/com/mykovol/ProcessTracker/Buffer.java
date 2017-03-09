@@ -20,7 +20,7 @@ final class Buffer {
     synchronized static void addEntry(ProcessDetails procDet) {
         if (procDet != null) {
             mylist.add(procDet);
-            logger.debug("item " + procDet.getDateTime() + " added to buffer. Size - " + mylist.size());
+            logger.debug("added to buffer. Size - " + mylist.size());
         }
     }
 
@@ -30,7 +30,7 @@ final class Buffer {
 //            remove from buffer when sync with DB is successful
             if (WorkWithDB.getInstance().addTrack(item)) {
                 i.remove();
-                logger.debug("item " + item.getDateTime() + " synced with DB. Size - " + mylist.size());
+                logger.debug("synced with DB. Left - " + mylist.size());
             }
         }
     }

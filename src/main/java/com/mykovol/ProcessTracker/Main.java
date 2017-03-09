@@ -24,6 +24,6 @@ public class Main {
         executor.scheduleAtFixedRate(() -> Buffer.addEntry(Process.getProcess()), 0, 1, TimeUnit.SECONDS);
 
         ScheduledExecutorService executor2 = Executors.newScheduledThreadPool(1);
-        executor2.scheduleAtFixedRate(Buffer::sync, 0, 2, TimeUnit.SECONDS);
+        executor2.scheduleAtFixedRate(Buffer::sync, 0, 20, TimeUnit.SECONDS);
     }
 }
