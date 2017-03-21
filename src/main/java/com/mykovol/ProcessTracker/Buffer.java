@@ -1,37 +1,40 @@
 package com.mykovol.ProcessTracker;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 
 /**
  * Created by MykoVol on 3/5/2017.
  */
-final class Buffer {
-    private static Logger logger = Logger.getLogger(Buffer.class);
-    private static final List<ProcessDetails> mylist = new ArrayList<>();
-    private static Buffer ourInstance = new Buffer();
+class Buffer {
+    private static final ArrayList<ProcessDetails> PROCESS_DETAILS = new ArrayList<>();
+    private static final Logger LOGGER = Logger.getLogger(Buffer.class);
 
-    public static Buffer getInstance() {
-        return ourInstance;
-    }
-
-    synchronized static void addEntry(ProcessDetails procDet) {
+    static void addEntry(ProcessDetails procDet) {
         if (procDet != null) {
-            mylist.add(procDet);
-            logger.debug("added to buffer. Size - " + mylist.size());
+            synchronized (PROCESS_DETAILS) {
+                PROCESS_DETAILS.add(procDet);
+            }
+            LOGGER.trace("Item added to buffer");
         }
     }
 
-    synchronized static void sync() {
-        for (Iterator<ProcessDetails> i = mylist.iterator(); i.hasNext(); ) {
-            ProcessDetails item = i.next();
-//            remove from buffer when sync with DB is successful
-            if (WorkWithDB.getInstance().addTrack(item)) {
-                i.remove();
-                logger.debug("synced with DB. Left - " + mylist.size());
-            }
+    static void sync() {
+        List<ProcessDetails> listToSync = null;
+//        copy all elements to syncList to release main list
+        synchronized (PROCESS_DETAILS) {
+            listToSync = new ArrayList<>(PROCESS_DETAILS);
+        }
+
+        WorkWithDB.getInstance().insertTrackList(listToSync);
+
+//        delete all synced items from main list
+        synchronized (PROCESS_DETAILS) {
+            PROCESS_DETAILS.removeAll(listToSync);
+            LOGGER.debug("Sync size - " + listToSync.size() + ". Buffer size - " + PROCESS_DETAILS.size());
+
         }
     }
 }

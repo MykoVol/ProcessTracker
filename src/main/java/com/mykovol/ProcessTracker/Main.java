@@ -12,18 +12,14 @@ import static com.sun.jna.NativeLibrary.getProcess;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-//        try {
-//            LogManager.getLogManager().readConfiguration(
-//                    Main.class.getResourceAsStream("/logging.properties"));
-//        } catch (IOException e) {
-//            System.err.println("Could not setup logger configuration: " + e.toString());
-//        }
+
+        AppProperties.getProperties();
 
 //        new HotKey().init();
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(() -> Buffer.addEntry(Process.getProcess()), 0, 1, TimeUnit.SECONDS);
 
         ScheduledExecutorService executor2 = Executors.newScheduledThreadPool(1);
-        executor2.scheduleAtFixedRate(Buffer::sync, 0, 20, TimeUnit.SECONDS);
+        executor2.scheduleWithFixedDelay(Buffer::sync, 0, 3, TimeUnit.SECONDS);
     }
 }

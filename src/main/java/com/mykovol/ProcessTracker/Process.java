@@ -30,13 +30,13 @@ class Process {
             logger.warn("procName is empty");
             return null;
         } else {
-            logger.debug("procName " + procName);
+            logger.trace("procName " + procName);
         }
 
         User32DLL.GetWindowTextW(User32DLL.GetForegroundWindow(), buffer, MAX_TITLE_LENGTH);
         procTitle = Native.toString(buffer);
 //        procName = procName.substring(procName.lastIndexOf('-')+2);
-        logger.debug("procTitle " + procTitle);
+        logger.trace("procTitle " + procTitle);
 
         return new ProcessDetails(procName, procTitle);
     }
