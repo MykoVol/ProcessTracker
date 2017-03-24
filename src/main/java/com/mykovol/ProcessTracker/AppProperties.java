@@ -1,6 +1,7 @@
 package com.mykovol.ProcessTracker;
 
 import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -12,6 +13,19 @@ public class AppProperties {
     private static Logger LOGGER = Logger.getLogger(AppProperties.class);
     private static String jdbcUrl;
     private static String jdbcUsername;
+
+    public static void setJdbcPassword(String jdbcPassword) {
+        if (jdbcPassword == null) {
+            LOGGER.error("Null password is given");
+        } else {
+            if (AppProperties.jdbcPassword == null){
+                LOGGER.error("Password is not set from config file");
+            } else{
+                AppProperties.jdbcPassword = AppProperties.jdbcPassword + jdbcPassword;
+            }
+        }
+    }
+
     private static String jdbcPassword;
 
     public static String getJdbcUrl() {

@@ -89,6 +89,14 @@ final class WorkWithDB {
             }
         } catch (Exception e) {
             listToSync.clear();
+//            todo do not try to reconnect if invalid password
+//            if (e instanceof SQLException) {
+//                if (((SQLException) e).getErrorCode() == 01017) {
+//                    logger.info ("Error tre"+((SQLException) e).getErrorCode());
+//                }
+//                logger.info ("Error typre"+((SQLException) e).getErrorCode());
+//            }
+
             if (connection != null) {
                 try {
                     connection.rollback();
@@ -96,7 +104,6 @@ final class WorkWithDB {
                     logger.error("Error on connection rollback", e);
                 }
             }
-            listToSync.clear();
             logger.error("Error with DB connection. Skip sync", e);
         } finally {
             if (connection != null) {
