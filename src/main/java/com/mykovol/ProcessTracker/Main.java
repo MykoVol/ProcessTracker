@@ -16,9 +16,14 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+//        save buffer to file before exist
+        Runtime.getRuntime().addShutdownHook(new Thread((() -> Buffer.saveToFile())));
+//        download saved buffer on start up
+        Buffer.readFromFile();
+
         AppProperties.getProperties();
-//        second part of a passwords is provided by parameter (pass = configPass + paramPass)
-        AppProperties.setJdbcPassword(args[0]);
+//        second part of a DB passwords is provided by parameter (DB pass = configPass + paramPass)
+        AppProperties.setJdbcPassword(args);
 
 //        new HotKey().init();
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
@@ -26,5 +31,9 @@ public class Main {
 
         ScheduledExecutorService executor2 = Executors.newScheduledThreadPool(1);
         executor2.scheduleWithFixedDelay(Buffer::sync, 0, 3, TimeUnit.SECONDS);
+
+
+
+
     }
 }

@@ -14,14 +14,18 @@ public class AppProperties {
     private static String jdbcUrl;
     private static String jdbcUsername;
 
-    public static void setJdbcPassword(String jdbcPassword) {
-        if (jdbcPassword == null) {
-            LOGGER.error("Null password is given");
+    public static void setJdbcPassword(String[] commandArgs) {
+        if (commandArgs.length == 0) {
+            LOGGER.error("Empty arguments!");
         } else {
-            if (AppProperties.jdbcPassword == null){
-                LOGGER.error("Password is not set from config file");
-            } else{
-                AppProperties.jdbcPassword = AppProperties.jdbcPassword + jdbcPassword;
+            if (commandArgs[0] == null) {
+                LOGGER.error("Null password is given in first parameter");
+            } else {
+                if (AppProperties.jdbcPassword == null) {
+                    LOGGER.error("Password is not set from config file");
+                } else {
+                    AppProperties.jdbcPassword = AppProperties.jdbcPassword + commandArgs;
+                }
             }
         }
     }

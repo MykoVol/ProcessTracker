@@ -13,8 +13,7 @@ public class HotKey {
         JIntellitype.getInstance().addHotKeyListener(arg0 -> {
             // show statistic window on Ctrl+Alt+T
             if (arg0 == 1)
-                Process.getProcess();
-
+                new ProcessTrackerSummary();
         });
     }
 

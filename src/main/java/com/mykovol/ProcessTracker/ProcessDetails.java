@@ -1,12 +1,13 @@
 package com.mykovol.ProcessTracker;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
 /**
  * Created by MykoVol on 3/5/2017.
  */
-class ProcessDetails {
+class ProcessDetails implements Serializable{
     private String procName;
     private String procTitle;
     private Timestamp DateTime;
