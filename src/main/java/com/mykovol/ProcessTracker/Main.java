@@ -25,7 +25,7 @@ public class Main {
 //        second part of a DB passwords is provided by parameter (DB pass = configPass + paramPass)
         AppProperties.setJdbcPassword(args);
 
-//        new HotKey().init();
+        new HotKey().init();
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(() -> Buffer.addEntry(Process.getProcess()), 0, 1, TimeUnit.SECONDS);
 
