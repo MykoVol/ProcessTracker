@@ -13,7 +13,12 @@ public class ProcessTrackerSummary extends JFrame{
     private JTextField textFieldBufferSize;
     private JPanel mainPanel;
     private JTextField textFieldLastSync;
-    private JButton ButtonRefresh;
+
+    private static ProcessTrackerSummary ourInstance = new ProcessTrackerSummary();
+
+    static ProcessTrackerSummary getInstance() {
+        return ourInstance;
+    }
 
     public ProcessTrackerSummary() {
         super("ProcessTracker Summary");
@@ -22,21 +27,18 @@ public class ProcessTrackerSummary extends JFrame{
         pack();
         //take up the default look and feel specified by windows themes
         setDefaultLookAndFeelDecorated(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+
+    }
+
+    public void showForm(){
         //make the window startup position be centered
         setLocationRelativeTo(null);
         setResizable(false);
 
         initValues();
         setVisible(true);
-
-        ButtonRefresh.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                initValues();
-            }
-        });
+        toFront();
     }
 
 

@@ -46,6 +46,9 @@ class Buffer {
             synchronized (PROCESS_DETAILS) {
                 PROCESS_DETAILS.add(procDet);
             }
+            if (ProcessTrackerSummary.getInstance().isVisible()) {
+                ProcessTrackerSummary.getInstance().initValues();
+            }
             LOGGER.trace("Item added to buffer");
         }
     }

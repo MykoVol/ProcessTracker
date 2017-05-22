@@ -1,0 +1,16 @@
+-- Create the user 
+create user APPTRACKER_OWNER
+  default tablespace USERS
+  temporary tablespace TEMP;
+ALTER USER APPTRACKER_OWNER identified by rcvRd34fDvAErFdfd;
+-- Grant/Revoke role privileges 
+grant connect to APPTRACKER_OWNER;
+grant resource to APPTRACKER_OWNER;
+-- Grant/Revoke system privileges 
+grant unlimited tablespace to APPTRACKER_OWNER;
+
+
+
+ALTER USER appTracker_user identified by DcgAHq8286bmNw;
+
+DcgAHq8|286bmNw

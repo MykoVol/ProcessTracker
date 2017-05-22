@@ -24,7 +24,7 @@ public class AppProperties {
                 if (AppProperties.jdbcPassword == null) {
                     LOGGER.error("Password is not set from config file");
                 } else {
-                    AppProperties.jdbcPassword = AppProperties.jdbcPassword + commandArgs;
+                    AppProperties.jdbcPassword = AppProperties.jdbcPassword + commandArgs[0];
                 }
             }
         }

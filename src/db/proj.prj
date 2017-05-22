@@ -1,0 +1,42 @@
+PL/SQL Developer Project
+
+[Options]
+AutoConnect=-1
+Username=AppTracker_Owner
+Password=200412541472114617324654384839064652418249284154410049584072462646044646
+Database=Tracker
+ConnectAs=Normal
+Edition=
+Workspace=
+HaltAfterError=0
+BrowseHistory=0
+FileBrowser=0
+ShowItems=-1
+
+[History]
+Programs=F:\JAVA007\laboratory\GitHub\ProcessTracker\db
+SQL Scripts=F:\JAVA007\laboratory\GitHub\ProcessTracker\db
+Report Files=
+Test Scripts=
+Command Scripts=
+Diagram Files=
+
+[BrowserFolders]
+
+
+[Groups]
+
+[Files]
+1,0,,,unlock user.sql
+1,0,,,select tracker  days.sql
+1,0,,,select tracker  days2.sql
+3,4,,,p_add_track.prc
+3,4,,,f_get_machine_id.fnc
+1,0,,,ddl_TRACK_ENTRY.sql
+1,0,,,dd_PROCES.sql
+1,0,,,ddl_MACHINE.sql
+
+[Notes]
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Tahoma;}}
+\viewkind4\uc1\pard\lang1033\f0\fs20\par
+}

@@ -26,17 +26,22 @@ class Process {
         Pointer process = Kernel32.OpenProcess(Kernel32.PROCESS_QUERY_INFORMATION | Kernel32.PROCESS_VM_READ, false, pointer.getValue());
         Psapi.GetModuleBaseNameW(process, null, buffer, MAX_TITLE_LENGTH);
         procName = Native.toString(buffer);
-        if (procName.isEmpty()) {
-            logger.warn("procName is empty");
-            return null;
-        } else {
-            logger.trace("procName " + procName);
-        }
+        logger.trace("procName " + procName);
+
 
         User32DLL.GetWindowTextW(User32DLL.GetForegroundWindow(), buffer, MAX_TITLE_LENGTH);
         procTitle = Native.toString(buffer);
 //        procName = procName.substring(procName.lastIndexOf('-')+2);
         logger.trace("procTitle " + procTitle);
+
+        if (procName.isEmpty()) {
+            if (procTitle.isEmpty()) {
+                logger.warn("procName and procTitle is empty");
+                return null;
+            } else {
+                procName = procTitle;
+            }
+        }
 
         return new ProcessDetails(procName, procTitle);
     }
