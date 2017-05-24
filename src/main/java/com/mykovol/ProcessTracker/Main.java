@@ -21,18 +21,21 @@ public class Main {
 //        download saved buffer on start up
         Buffer.readFromFile();
 
+
         AppProperties.getProperties();
 //        second part of a DB passwords is provided by parameter (DB pass = configPass + paramPass)
         AppProperties.setJdbcPassword(args);
+        try {
+            new HotKey().init();
+        } catch (Exception e) {
+            LOGGER.error("Hot key will not work. Library did not loaded on " + System.getProperty("sun.arch.data.model") + "bit system",e);
+        }
 
-        new HotKey().init();
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(() -> Buffer.addEntry(Process.getProcess()), 0, 1, TimeUnit.SECONDS);
 
         ScheduledExecutorService executor2 = Executors.newScheduledThreadPool(1);
         executor2.scheduleWithFixedDelay(Buffer::sync, 0, 3, TimeUnit.SECONDS);
-
-
 
 
     }

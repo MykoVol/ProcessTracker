@@ -46,8 +46,8 @@ class Buffer {
             synchronized (PROCESS_DETAILS) {
                 PROCESS_DETAILS.add(procDet);
             }
-            if (ProcessTrackerSummary.getInstance().isVisible()) {
-                ProcessTrackerSummary.getInstance().initValues();
+            if (PTBoard.getInstance().isVisible()) {
+                PTBoard.getInstance().initValues();
             }
             LOGGER.trace("Item added to buffer");
         }
@@ -70,7 +70,7 @@ class Buffer {
             setLastSyncTime();
             setLastSyncCount(listToSync.size());
         }
-        LOGGER.debug("Sync size - " + listToSync.size() + ". Buffer size - " + PROCESS_DETAILS.size());
+        LOGGER.info("Sync size - " + listToSync.size() + ". Buffer size - " + PROCESS_DETAILS.size());
     }
 
     static void saveToFile() {

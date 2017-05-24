@@ -23,9 +23,7 @@ final class WorkWithDB {
     private int machineID;
     private static WorkWithDB ourInstance = new WorkWithDB();
 
-    static WorkWithDB getInstance() {
-        return ourInstance;
-    }
+    static WorkWithDB getInstance() {return ourInstance;}
 
     private static DataSource getDataSource() {
         if (datasource == null) {
