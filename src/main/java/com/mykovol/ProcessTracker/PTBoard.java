@@ -21,6 +21,7 @@ public class PTBoard extends JFrame {
     }
 
     public PTBoard() {
+        super("PT Board");
         $$$setupUI$$$();
         setContentPane(PTBoardMain);
         pack();
